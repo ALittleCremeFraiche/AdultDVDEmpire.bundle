@@ -16,10 +16,10 @@ import re
 import datetime
 import random
 import sys
+from lxml import html
 # This is for importing the bundled urllib3
 sys.path.append(PMS_DATA_LOCATION)
 import urllib3
-from lxml import html
 
 # preferences
 preference = Prefs
