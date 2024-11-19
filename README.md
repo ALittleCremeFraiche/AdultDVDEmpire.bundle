@@ -12,17 +12,17 @@ This version was originally from macr0dev (I think) but I have had to make small
 
 ### Changelog:
 
-Update: 19 Nov 2024
-Description: Summary2 would only scrape first p tag even if summary spanned multiple p tags. Now scrapes all and separates with a new line. Don't need to pass in full browser cookie, just append ageConfirmed=true. Also learned how to import libraries without adding to sys.path. Removed the config.py file because of these lessons and improvements.
+**Update:** 19 Nov 2024  
+**Description:** Summary2 would only scrape first p tag even if summary spanned multiple p tags. Now scrapes all and separates with a new line. Don't need to pass in full browser cookie, just append ageConfirmed=true. Also learned how to import libraries without adding to sys.path. Removed the config.py file because of these lessons and improvements.
 
-Update: 14 Nov 2024
-Description: Bundled urllib3 and reworked code since urllib2 in the Python 2.7 environment Plex uses is too old for AE and causes an SSL error. Also now need to pass in cookie from browser in config.py to bypass age restricted page.
+**Update:** 14 Nov 2024  
+**Description:** Bundled urllib3 and reworked code since urllib2 in the Python 2.7 environment Plex uses is too old for AE and causes an SSL error. Also now need to pass in cookie from browser in config.py to bypass age restricted page.
 
-Update: 4 Aug 2023
-Description: Fixed missing summary due to AE site change and also fixed cast pulling into studio field.
+**Update:** 4 Aug 2023  
+**Description:** Fixed missing summary due to AE site change and also fixed cast pulling into studio field.
 
-Update: 23 June 2021
-Description: New updates from a lot of diffrent forks and people.
+**Update:** 23 June 2021  
+**Description:** New updates from a lot of diffrent forks and people.
 
 20210624  
 Update to fix issues created by a Plex update.  
