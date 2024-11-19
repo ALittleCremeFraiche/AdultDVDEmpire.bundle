@@ -1,24 +1,9 @@
 # AdultDVDEmpire
-#
-# Update: 14 Nov 24
-# Description: Bundled urllib3 since urllib2 in the Python 2.7 environment Plex uses is too old for AE and causes an SSL error. Added a config.py file to: 1. pass in cookie from browser to bypass age restricted page, and 2. set PMS install location for urllib3 import.
-#
-# Update: 4 Aug 23  
-# Description: Fixed missing summary due to AE site change and also fixed cast pulling into studio field.
-#
-# Update: 23 June 2021   
-# Description: New updates from a lot of diffrent forks and people. Please read README.md for more details.
 
-from config import COOKIE_VALUE
-from config import PMS_DATA_LOCATION
-Log('PMS_DATA_LOCATION is: %s' % PMS_DATA_LOCATION)
 import re
 import datetime
 import random
-import sys
 from lxml import html
-# This is for importing the bundled urllib3
-sys.path.append(PMS_DATA_LOCATION)
 import urllib3
 
 # preferences
@@ -69,7 +54,7 @@ headers = {
     'Accept-Encoding': 'gzip, deflate, br',
     'Accept-Language': 'en-US,en;q=0.9',
     'Connection': 'keep-alive',
-    'Cookie': 'etoken=' + COOKIE_VALUE + '; ageConfirmed=true',
+    'Cookie': 'ageConfirmed=true',
 }
 
 class ADEAgent(Agent.Movies):
@@ -141,26 +126,26 @@ class ADEAgent(Agent.Movies):
                             if DEBUG: Log('Production Year found: %s' % str(curYear))
                     except:
                         pass
-                    
+
                     # Determine the media format (DVD, Blu-ray, etc.)
                     if preference['searchtype'] == 'all':
                         movie2 = movie.xpath('.//small[contains(text(),"DVD-Video")]')
                         if len(movie2) > 0:
                             mediaformat = "dvd"
                             if DEBUG: Log('DVD format detected')
-                        
+
                         movie2 = movie.xpath('.//small[contains(text(),"Blu-ray")]')
                         if len(movie2) > 0:
                             mediaformat = "br"
                             if DEBUG: Log('Blu-ray format detected')
-                        
+
                         movie2 = movie.xpath('.//small[contains(text(),"Video On Demand")]')
                         if len(movie2) > 0:
                             mediaformat = "vod"
                             if DEBUG: Log('Video On Demand format detected')
                         else:
                             mediaformat = 'NA'
-                    
+
                         if DEBUG: Log('Media format: %s' % str(mediaformat))
 
                     # Build up the result array
@@ -247,7 +232,7 @@ class ADEAgent(Agent.Movies):
     except Exception as e:
         Log('Exception while fetching tagline: %s' % str(e))
 
-    # Summary
+    # Summary old style
     try:
         summary = tree.xpath('//div[@class="col-xs-12 text-center p-y-2 bg-lightgrey"]/div/p')[0].text_content().strip()
         summary = re.sub('<[^<]+?>', '', summary)
@@ -256,11 +241,17 @@ class ADEAgent(Agent.Movies):
     except Exception as e:
         Log('Exception while parsing summary: %s' % str(e))
 
+    # Summary new style
     try:
-        summary2 = tree.xpath('//div[@class="synopsis-content"]/p')[0].text_content().strip()
+        paragraphs = tree.xpath('//div[@class="synopsis-content"]/p')
+        summary2 = "\n".join(p.text_content().strip() for p in paragraphs)
         summary2 = re.sub('<[^<]+?>', '', summary2)
-        Log('Summary2 Found: %s' % str(summary2))
-        metadata.summary = summary2
+        # Update metadata.summary only if summary2 has a value
+        if summary2:  # Checks if summary2 has a value
+            Log('Summary2 Found: %s' % str(summary2))
+            metadata.summary = summary2
+        else:
+            Log('Summary Not Found')    
     except Exception as e:
         Log('Exception while parsing second summary: %s' % str(e))
 
@@ -314,7 +305,7 @@ class ADEAgent(Agent.Movies):
 
     # Release Date
     if 'Released' in data:
-        if DEBUG: Log('Release Present...')
+        if DEBUG: Log('Release Date Present...')
         try:
             metadata.originally_available_at = Datetime.ParseDate(data['Released']).date()
             metadata.year = metadata.originally_available_at.year
