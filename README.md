@@ -13,7 +13,7 @@ This version was originally from macr0dev (I think) but I have had to make small
 ### Changelog:
 
 **Update:** 02 Dec 2024  
-**Description:** Removed unused random function. Fixed scraping of production year (was only scraping release date). Fixed the media format always returning as 'NA' despite pref setting. Refactored some code for efficiency and to remove possibility of using a couple of variables before assignment. Tagline was also no longer scraping.
+**Description:** Removed unused random function. Fixed scraping of production year (was only scraping release date). Fixed the media format always returning as 'NA' despite pref setting. Refactored some code for efficiency and to remove possibility of using a couple of variables before assignment. Fixed a lot of indentation issues etc. Tagline was also no longer scraping.
 
 **Update:** 19 Nov 2024  
 **Description:** Summary2 would only scrape first p tag even if summary spanned multiple p tags. Now scrapes all and separates with a new line. Don't need to pass in full browser cookie, just append ageConfirmed=true. Also learned how to import libraries without adding to sys.path. Removed the config.py file because of these lessons and improvements.
