@@ -116,9 +116,10 @@ class ADEAgent(Agent.Movies):
 
                         # Parse out the Production Year
                         try:
-                            curYear = movie.xpath('//div[contains(@class, "list-view-item-info__title")]/a/following-sibling::text()')[0].strip()
+                            curYear = movie.xpath('.//div[contains(@class, "list-view-item-info__title")]/text()[normalize-space()]')
+                            curYear = curYear[1].strip()
                             if len(curYear):
-                                if not re.match(r"\(\d\d\d\d\)", curYear):
+                                if not re.match(r"\(\d{4}\)", curYear):
                                     curYear = None
                                 else:
                                     yearName += " " + curYear

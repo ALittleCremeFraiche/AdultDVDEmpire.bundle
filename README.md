@@ -8,9 +8,12 @@ I'm not an expert in Python, or anything, really. Please forgive any shortcoming
 
 ### Info:
 
-This version was originally from macr0dev (I think) but I have had to make small updates to it over the years to keep it working, mostly due to changes on the AE website. The most recent issue was the introduction of an age restriction screen which effectively blocks the script from parsing a search page until the button has been clicked. Fixed by passing ageConfirmed=true in the cookie. Also bundled urllib3 since urllib2 was no longer playing nice with the modern AE site, causing an SSL error. Since there is now no working version of this plugin available, I decided to share it with the three people still using it.
+This version was originally from macr0dev (I think) but I have had to make small updates to it over the years to keep it working, mostly due to changes on the AE website. Since there is now no working version of this plugin available, I decided to share it with the three people still using it.
 
 ### Changelog:
+
+**Update:** 17 Dec 2024  
+**Description:** Fixed an issue causing the scraped production year to be incorrect in some cases, but this would cause issues for matching.
 
 **Update:** 02 Dec 2024  
 **Description:** Removed unused random function. Fixed scraping of production year (was only scraping release date). Fixed the media format always returning as 'NA' despite pref setting. Refactored some code for efficiency and to remove possibility of using a couple of variables before assignment. Fixed a lot of indentation issues etc. Tagline was also no longer scraping.
